@@ -18,4 +18,5 @@ pip install -r requirements.txt
 python main.py
 ```
 
+Note: you will need to have the EOS window in focus for the script to work.
 
