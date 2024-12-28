@@ -20,3 +20,7 @@ python main.py
 
 Note: you will need to have the EOS window in focus for the script to work.
 
+
+
+# TODO
+- [ ] Add support for softkeys (requires tracking EOS state)

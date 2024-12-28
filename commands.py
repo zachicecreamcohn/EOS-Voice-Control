@@ -238,6 +238,7 @@ words_to_commands = {
     "light": Command.DO_NOTHING,
     "lights": Command.DO_NOTHING,
 
+
 }
 
 
