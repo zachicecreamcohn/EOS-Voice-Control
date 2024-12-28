@@ -232,7 +232,12 @@ words_to_commands = {
 
 
     # Common words that shouldn't do anything
+    # These are often used colloquially but don't have a direct command mapping
     "channel": Command.DO_NOTHING,
+    "channels": Command.DO_NOTHING,
+    "light": Command.DO_NOTHING,
+    "lights": Command.DO_NOTHING,
+
 }
 
 
