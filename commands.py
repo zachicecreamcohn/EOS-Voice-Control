@@ -45,7 +45,7 @@ class Command(Enum):
     CLEAR = {"key" : "", "modifiers" : [Key.backspace]}
     SHIFT_CLEAR = {"key" : "", "modifiers" : [Key.shift, Key.backspace]}
     DELETE = {"key" : "", "modifiers" : [Key.delete]}
-    GO = {"key" : "", "modifiers" : []}
+    GO = {"key" : " ", "modifiers" : []}
     HOME = {"key" : "", "modifiers" : [Key.home]}
     MARK = {"key" : "k", "modifiers" : []}
     RECALLFROM = {"key" : "e", "modifiers" : []}
