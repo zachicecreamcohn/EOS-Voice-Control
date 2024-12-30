@@ -1,7 +1,7 @@
 from vosk import Model, KaldiRecognizer
 import sounddevice as sd
 import json
-from pynput.keyboard import Controller
+from pynput.keyboard import Controller, Key, GlobalHotKeys
 from commands import words_to_commands, number_words
 from utils import number_string_to_number, number_to_words
 
@@ -10,17 +10,36 @@ model = Model(MODEL_PATH)
 
 grammar = json.dumps(number_words + list(words_to_commands.keys()))
 recognizer = KaldiRecognizer(model, 16000, grammar)
+is_listening = False
 
 keyboard = Controller()
 
+current_commands = [] # to be reset after every instance of ENTER
+
+def setup_hotkey():
+    # setup so that clicking shift-option "mutes" and "unmutes" the microphone
+    def toggle_listening():
+        global is_listening
+        is_listening = not is_listening
+        print(f"{'Listening' if is_listening else 'Muted'}")
+
+    GlobalHotKeys({
+        "<shift>+<alt>": lambda: toggle_listening()
+        }).start()
+
+
 def send(command_dict):
+    current_commands.append(command_dict)
+    if command_dict["key"] == "" and command_dict["modifiers"] == [Key.enter]:
+        current_commands.clear()
+
     for mod in command_dict["modifiers"]:
         keyboard.press(mod)
     if command_dict["key"]:
-        keyboard.press(command_dict["key"])
-        keyboard.release(command_dict["key"])
+        keyboard.type(command_dict["key"])
     for mod in reversed(command_dict["modifiers"]):
         keyboard.release(mod)
+
 
 def get_commands_from_phrase(phrase):
     if phrase in words_to_commands:
@@ -65,6 +84,8 @@ def execute_command(full_command):
             i += 1
 
 def audio_callback(indata, frames, time, status):
+    if not is_listening:
+        return
     audio_data = indata.tobytes()
     if recognizer.AcceptWaveform(audio_data):
         result = json.loads(recognizer.Result())
@@ -74,7 +95,7 @@ def audio_callback(indata, frames, time, status):
             execute_command(command)
 
 def main():
-    print("Listening for commands...")
+    setup_hotkey()
     with sd.InputStream(samplerate=16000, channels=1, dtype="int16", callback=audio_callback):
         sd.sleep(-1)
 

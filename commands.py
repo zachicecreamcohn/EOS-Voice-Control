@@ -34,7 +34,8 @@ class Command(Enum):
 
     # Common Commands
     CUE = {"key" : "q", "modifiers" : []}
-    AT = {"key" : "@", "modifiers" : []}
+    AT = {"key" : "a", "modifiers" : []}
+    ATAT = {"key" : "aa", "modifiers" : []}
     OUT = {"key" : "o", "modifiers" : []}
     THRU = {"key" : "t", "modifiers" : []}
     UPDATE = {"key" : "u", "modifiers" : []}
@@ -46,6 +47,7 @@ class Command(Enum):
     SHIFT_CLEAR = {"key" : "", "modifiers" : [Key.shift, Key.backspace]}
     DELETE = {"key" : "", "modifiers" : [Key.delete]}
     GO = {"key" : " ", "modifiers" : []}
+    STOP_BACK = {"key" : " ", "modifiers" : [Key.ctrl]}
     HOME = {"key" : "", "modifiers" : [Key.home]}
     MARK = {"key" : "k", "modifiers" : []}
     RECALLFROM = {"key" : "e", "modifiers" : []}
@@ -138,6 +140,8 @@ words_to_commands = {
 
     "cue": Command.CUE,
     "at": Command.AT,
+    "at at": Command.ATAT,
+    "at level": Command.ATAT,
     "out": Command.OUT,
     "thru": Command.THRU,
     "update": Command.UPDATE,
@@ -149,6 +153,9 @@ words_to_commands = {
     "shift clear": Command.SHIFT_CLEAR,
     "delete": Command.DELETE,
     "go": Command.GO,
+    "stop back": Command.STOP_BACK,
+    "stop": Command.STOP_BACK,
+    "back": Command.STOP_BACK,
     "home": Command.HOME,
     "mark": Command.MARK,
     "recall from": Command.RECALLFROM,
