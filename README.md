@@ -23,5 +23,6 @@ Note: you will need to have the EOS window in focus for the script to work.
 
 
 # TODO
-- [ ] Implement context-specific grammar. 
+- [ ] Implement context-specific grammar.
+- [ ] Add mute/unmute shortcut/hotkey
 - [ ] Fine tune to improve accuracy with my voice [using Vosk's model training](https://alphacephei.com/vosk/adaptation#:~:text=Adapting%20the%20acoustic%20model%20with%20finetuning)
