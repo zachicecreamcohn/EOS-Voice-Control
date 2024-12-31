@@ -4,6 +4,7 @@ import json
 from pynput.keyboard import Controller, Key, GlobalHotKeys
 from commands import words_to_commands, number_words
 from utils import number_string_to_number, number_to_words
+from enum import Enum
 
 MODEL_PATH = "vosk-model-small-en-us-0.15"
 model = Model(MODEL_PATH)
@@ -14,7 +15,11 @@ is_listening = False
 
 keyboard = Controller()
 
-current_commands = [] # to be reset after every instance of ENTER
+class Method(Enum):
+    OSC = 1
+    KEYBOARD = 2
+
+current_method = Method.KEYBOARD
 
 def setup_hotkey():
     # setup so that clicking shift-option "mutes" and "unmutes" the microphone
@@ -29,16 +34,16 @@ def setup_hotkey():
 
 
 def send(command_dict):
-    current_commands.append(command_dict)
-    if command_dict["key"] == "" and command_dict["modifiers"] == [Key.enter]:
-        current_commands.clear()
-
-    for mod in command_dict["modifiers"]:
-        keyboard.press(mod)
-    if command_dict["key"]:
-        keyboard.type(command_dict["key"])
-    for mod in reversed(command_dict["modifiers"]):
-        keyboard.release(mod)
+    if current_method == Method.OSC:
+        # send OSC message
+        pass
+    elif current_method == Method.KEYBOARD:
+        for mod in command_dict["shortcut"]["modifiers"]:
+            keyboard.press(mod)
+        if command_dict["shortcut"]["key"]:
+            keyboard.type(command_dict["shortcut"]["key"])
+        for mod in reversed(command_dict["shortcut"]["modifiers"]):
+            keyboard.release(mod)
 
 
 def get_commands_from_phrase(phrase):
