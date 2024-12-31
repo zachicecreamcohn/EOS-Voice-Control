@@ -30,3 +30,4 @@ python main.py
 - [ ] Implement context-specific grammar.
 - [x] Add mute/unmute shortcut/hotkey
 - [ ] Fine tune to improve accuracy with my voice [using Vosk's model training](https://alphacephei.com/vosk/adaptation#:~:text=Adapting%20the%20acoustic%20model%20with%20finetuning)
+- [x] Switch from sending keystrokes to a focused Nomand window to OSC UDP
