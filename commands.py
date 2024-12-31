@@ -7,118 +7,103 @@ class Command(Enum):
     Commands to shortcut mappings for keyboard.send
     """
 
-    DO_NOTHING = {"key" : "", "modifiers" : []}
+    DO_NOTHING = {"commands":[]}
 
     # Numbers and Symbols
-    ZERO = {"key" : "0", "modifiers" : []}
-    ONE = {"key" : "1", "modifiers" : []}
-    TWO = {"key" : "2", "modifiers" : []}
-    THREE = {"key" : "3", "modifiers" : []}
-    FOUR = {"key" : "4", "modifiers" : []}
-    FIVE = {"key" : "5", "modifiers" : []}
-    SIX = {"key" : "6", "modifiers" : []}
-    SEVEN = {"key" : "7", "modifiers" : []}
-    EIGHT = {"key" : "8", "modifiers" : []}
-    NINE = {"key" : "9", "modifiers" : []}
-    DECIMAL = {"key" : ".", "modifiers" : []}
-    MINUS = {"key" : "-", "modifiers" : []}
-    PLUS = {"key" : "+", "modifiers" : []}
-    PLUS_PERCENT = {"key" : "+", "modifiers" : [Key.shift]}
-    MINUS_PERCENT = {"key" : "-", "modifiers" : [Key.shift]}
-    DIVIDE = {"key" : "/", "modifiers" : []}
+    ZERO = {"commands":["/eos/key/0"]}
+    ONE = {"commands":["/eos/key/1"]}
+    TWO = {"commands":["/eos/key/2"]}
+    THREE = {"commands":["/eos/key/3"]}
+    FOUR = {"commands":["/eos/key/4"]}
+    FIVE = {"commands":["/eos/key/5"]}
+    SIX = {"commands":["/eos/key/6"]}
+    SEVEN = {"commands":["/eos/key/7"]}
+    EIGHT = {"commands":["/eos/key/8"]}
+    NINE = {"commands":["/eos/key/9"]}
+    DECIMAL = {"commands":["/eos/key/."]}
+    MINUS = {"commands":["/eos/key/-"]}
+    PLUS = {"commands":["/eos/key/+"]}
+    PLUS_PERCENT = {"commands":["/eos/key/+%"]}
+    MINUS_PERCENT = {"commands":["/eos/key/-$"]}
+    DIVIDE = {"commands":["/eos/key//"]}
 
     # Console Modes
-    LIVE = {"key" : "", "modifiers" : [Key.f1]}
-    BLIND = {"key" : "", "modifiers" : [Key.f2]}
-    STAGING = {"key" : "", "modifiers" : [Key.f6]}
+    LIVE = {"commands":["/eos/key/live"]}
+    BLIND = {"commands":["/eos/key/blind"]}
+    STAGING = {"commands":[]} # TODO: determine the command for thi
 
     # Common Commands
-    CUE = {"key" : "q", "modifiers" : []}
-    AT = {"key" : "a", "modifiers" : []}
-    ATAT = {"key" : "aa", "modifiers" : []}
-    OUT = {"key" : "o", "modifiers" : []}
-    THRU = {"key" : "t", "modifiers" : []}
-    UPDATE = {"key" : "u", "modifiers" : []}
-    GROUP = {"key" : "g", "modifiers" : []}
-    ENTER = {"key" : "", "modifiers" : [Key.enter]}
-    GOTOCUE = {"key" : "g", "modifiers" : [Key.ctrl]}
-    FULL = {"key" : "f", "modifiers" : []}
-    CLEAR = {"key" : "", "modifiers" : [Key.backspace]}
-    SHIFT_CLEAR = {"key" : "", "modifiers" : [Key.shift, Key.backspace]}
-    DELETE = {"key" : "", "modifiers" : [Key.delete]}
-    GO = {"key" : " ", "modifiers" : []}
-    STOP_BACK = {"key" : " ", "modifiers" : [Key.ctrl]}
-    HOME = {"key" : "", "modifiers" : [Key.home]}
-    MARK = {"key" : "k", "modifiers" : []}
-    RECALLFROM = {"key" : "e", "modifiers" : []}
-    SHIFT = {"key" : "z", "modifiers" : []}
-    SNEAK = {"key" : "n", "modifiers" : []}
-    PATCH = {"key" : ";", "modifiers" : []}
-    RECORD = {"key" : "r", "modifiers" : []}
-    RECORD_ONLY = {"key" : "r", "modifiers" : [Key.ctrl]}
-    UNDO = {"key" : "x", "modifiers" : [Key.ctrl]}
-    FOLLOW = {"key" : "d", "modifiers" : [Key.shift]}
-    HANG = {"key" : "dd", "modifiers" : [Key.shift]}
+    CUE = {"commands":["/eos/key/cue"]}
+    AT = {"commands":["/eos/key/@"]}
+    ATAT = {"commands":["/eos/key/@", "/eos/key/@"]}
+    OUT = {"commands":["/eos/key/out"]}
+    THRU = {"commands":["/eos/key/thru"]}
+    UPDATE = {"commands":["/eos/key/update"]}
+    GROUP = {"commands":["/eos/key/group"]}
+    ENTER = {"commands":["/eos/key/enter"]}
+    GOTOCUE = {"commands":["/eos/key/go_to_cue"]}
+    FULL = {"commands":["/eos/key/full"]}
+    CLEAR = {"commands":["/eos/key/clear_cmd"]}
+    SHIFT_CLEAR = {"commands":["/eos/key/clear_cmdline"]}
+    DELETE = {"commands":["/eos/key/delete"]}
+    GO = {"commands":["/eos/key/go_0"]}
+    STOP_BACK = {"commands":["/eos/key/stop"]}
+    HOME = {"commands":["/eos/key/home"]}
+    MARK = {"commands":["/eos/key/mark"]}
+    RECALLFROM = {"commands":["/eos/key/recall_from"]}
+    SHIFT = {"commands":["/eos/key/shift"]}
+    SNEAK = {"commands":["/eos/key/sneak"]}
+    PATCH = {"commands":["/eos/key/patch"]}
+    RECORD = {"commands":["/eos/key/record"]}
+    RECORD_ONLY = {"commands":["/eos/key/record_only"]}
+    UNDO = {"commands":["/eos/key/undo"]}
+    FOLLOW = {"commands":["/eos/key/follow"]}
+    HANG = {"commands":["/eos/key/hang"]}
+    SOLO = {"commands":["/eos/key/solo"]}
+
 
     # Navigation and Camera
-    NEXT = {"key": "", "modifiers": [Key.page_down]}
-    LAST = {"key": "", "modifiers": [Key.page_up]}
-    CAMERA_UP = {"key": "", "modifiers": [Key.up]}
-    CAMERA_DOWN = {"key": "", "modifiers": [Key.down]}
-    CAMERA_LEFT = {"key": "", "modifiers": [Key.left]}
-    CAMERA_RIGHT = {"key": "", "modifiers": [Key.right]}
-    CAMERA_FORWARDS = {"key": "", "modifiers": [Key.shift, Key.up]}
-    CAMERA_BACKWARDS = {"key": "", "modifiers": [Key.shift, Key.down]}
-    CAMERA_UP_EDIT = {"key": "w", "modifiers": []}
-    CAMERA_DOWN_EDIT = {"key": "s", "modifiers": []}
-    CAMERA_LEFT_EDIT = {"key": "a", "modifiers": []}
-    CAMERA_RIGHT_EDIT = {"key": "d", "modifiers": []}
-    CAMERA_FORWARDS_EDIT = {"key": "w", "modifiers": [Key.shift]}
-    CAMERA_BACKWARDS_EDIT = {"key": "s", "modifiers": [Key.shift]}
+    NEXT = {"commands":["/eos/key/next"]}
+    LAST = {"commands":["/eos/key/last"]}
 
     # System Controls
-    ESCAPE = {"key": "", "modifiers": [Key.esc]}
-    TAB = {"key": "", "modifiers": [Key.tab]}
-    EXPAND = {"key": "", "modifiers": [Key.f5]}
-    FLEXI_CHANNEL = {"key": "", "modifiers": [Key.f3]}
-    DISPLAYS = {"key": "", "modifiers": [Key.f9]}
-    TOGGLE_HOTKEYS = {"key": "", "modifiers": [Key.f8]}
+    ESCAPE = {"commands":["/eos/key/escape"]}
+    TAB = {"commands":["/eos/key/tab"]}
+    EXPAND = {"commands":["/eos/key/expand"]}
+    FLEXI_CHANNEL = {"commands":["/eos/key/flexi_all"]}
+    DISPLAYS = {"commands":["/eos/key/displays"]}
 
     # Softkeys and Submaster
-    SOFTKEY_1 = {"key": "1", "modifiers": [Key.alt]}
-    SOFTKEY_2 = {"key": "2", "modifiers": [Key.alt]}
-    SOFTKEY_3 = {"key": "3", "modifiers": [Key.alt]}
-    SOFTKEY_4 = {"key": "4", "modifiers": [Key.alt]}
-    SOFTKEY_5 = {"key": "5", "modifiers": [Key.alt]}
-    SOFTKEY_6 = {"key": "6", "modifiers": [Key.alt]}
-    SUBMASTER = {"key": "s", "modifiers": []}
+    SOFTKEY_1 = {"commands":["/eos/key/softkey_1"]}
+    SOFTKEY_2 = {"commands":["/eos/key/softkey_2"]}
+    SOFTKEY_3 = {"commands":["/eos/key/softkey_3"]}
+    SOFTKEY_4 = {"commands":["/eos/key/softkey_4"]}
+    SOFTKEY_5 = {"commands":["/eos/key/softkey_5"]}
+    SOFTKEY_6 = {"commands":["/eos/key/softkey_6"]}
+    SOFTKEY_7 = {"commands":["/eos/key/softkey_7"]}
+    SOFTKEY_8 = {"commands":["/eos/key/softkey_8"]}
+
+    SUBMASTER = {"commands":["/eos/key/sub"]}
 
     # Miscellaneous
-    LABEL = {"key": "l", "modifiers": []}
-    PART = {"key": "p", "modifiers": []}
-    INTENSITY_FILTER = {"key": "i", "modifiers": [Key.ctrl]}
-    COLOR_FILTER = {"key": "c", "modifiers": [Key.ctrl]}
-    EFFECT = {"key": "e", "modifiers": [Key.alt]}
-    SNAPSHOT = {"key": "s", "modifiers": [Key.ctrl]}
-    TIME = {"key": "i", "modifiers": []}
-    TIME_DISPLAY = {"key": "i", "modifiers": [Key.ctrl, Key.alt]}
-    RATE = {"key": "r", "modifiers": [Key.ctrl, Key.alt]}
-    OFFSET = {"key": "o", "modifiers": [Key.ctrl]}
-    QUERY = {"key": "q", "modifiers": [Key.ctrl]}
-    PARK = {"key": "k", "modifiers": [Key.alt]}
-    STOP_EFFECT = {"key": "e", "modifiers": [Key.shift, Key.alt]}
-    MAGIC_SHEET = {"key": "m", "modifiers": [Key.alt]}
-    MACRO_801 = {"key": "1", "modifiers": [Key.ctrl, Key.alt]}
-    MACRO_802 = {"key": "2", "modifiers": [Key.ctrl, Key.alt]}
-    MACRO_803 = {"key": "3", "modifiers": [Key.ctrl, Key.alt]}
-    MACRO_804 = {"key": "4", "modifiers": [Key.ctrl, Key.alt]}
-    MACRO_805 = {"key": "5", "modifiers": [Key.ctrl, Key.alt]}
-    MACRO_806 = {"key": "6", "modifiers": [Key.ctrl, Key.alt]}
-    MACRO_807 = {"key": "7", "modifiers": [Key.ctrl, Key.alt]}
-    MACRO_808 = {"key": "8", "modifiers": [Key.ctrl, Key.alt]}
-    MACRO_809 = {"key": "9", "modifiers": [Key.ctrl, Key.alt]}
-    MACRO_810 = {"key": "0", "modifiers": [Key.ctrl, Key.alt]}
+    LABEL = {"commands":["/eos/key/label"]}
+    PART = {"commands":["/eos/key/part"]}
+    INTENSITY = {"commands":["/eos/key/intensity"]}
+    COLOR = {"commands":["/eos/key/color"]}
+    EFFECT = {"commands":["/eos/key/effect"]}
+    SNAPSHOT = {"commands":["/eos/key/snapshot"]}
+    TIME = {"commands":["/eos/key/time"]}
+    RATE = {"commands":["/eos/key/rate"]}
+    OFFSET = {"commands":["/eos/key/offset"]}
+    QUERY = {"commands":["/eos/key/query"]}
+    PARK = {"commands":["/eos/key/park"]}
+    STOP_EFFECT = {"commands":["/eos/key/stop_effect"]}
+    MAGIC_SHEET = {"commands":["/eos/key/magic_sheet"]}
+    MOVE_TO = {"commands":["/eos/key/move_to"]}
+    COPY_TO = {"commands":["/eos/key/copy_to"]}
+    MACRO = {"commands":["/eos/key/macro"]}
 
+    # TODO: Add more (obscure or less used by me) commands from [these docs](https://community.troikatronix.com/assets/uploads/files/FileUpload/f8/c8d85d-eos-osc-keys.pdf?v=lmfj8m1vhl4)
 
 words_to_commands = {
     "live": Command.LIVE,
@@ -141,6 +126,7 @@ words_to_commands = {
 
     "follow": Command.FOLLOW,
     "hang": Command.HANG,
+    "solo": Command.SOLO,
 
     "cue": Command.CUE,
     "at": Command.AT,
@@ -171,76 +157,36 @@ words_to_commands = {
     "undo": Command.UNDO,
     "next": Command.NEXT,
     "last": Command.LAST,
-    "camera up": Command.CAMERA_UP,
-    "camera down": Command.CAMERA_DOWN,
-    "camera left": Command.CAMERA_LEFT,
-    "camera right": Command.CAMERA_RIGHT,
-    "camera forwards": Command.CAMERA_FORWARDS,
-    "camera backwards": Command.CAMERA_BACKWARDS,
-    "camera up edit": Command.CAMERA_UP_EDIT,
-    "camera down edit": Command.CAMERA_DOWN_EDIT,
-    "camera left edit": Command.CAMERA_LEFT_EDIT,
-    "camera right edit": Command.CAMERA_RIGHT_EDIT,
-    "camera forwards edit": Command.CAMERA_FORWARDS_EDIT,
-    "camera backwards edit": Command.CAMERA_BACKWARDS_EDIT,
     "escape": Command.ESCAPE,
     "tab": Command.TAB,
     "expand": Command.EXPAND,
     "flexichannel": Command.FLEXI_CHANNEL,
     "displays": Command.DISPLAYS,
-    "toggle hotkeys": Command.TOGGLE_HOTKEYS,
     "softkey one": Command.SOFTKEY_1,
     "softkey two": Command.SOFTKEY_2,
     "softkey three": Command.SOFTKEY_3,
     "softkey four": Command.SOFTKEY_4,
     "softkey five": Command.SOFTKEY_5,
     "softkey six": Command.SOFTKEY_6,
+    "softkey seven": Command.SOFTKEY_7,
+    "softkey eight": Command.SOFTKEY_8,
     "submaster": Command.SUBMASTER,
     "label": Command.LABEL,
     "part": Command.PART,
-    "intensity filter": Command.INTENSITY_FILTER,
-    "color filter": Command.COLOR_FILTER,
+    "intensity": Command.INTENSITY,
+    "color": Command.COLOR,
     "effect": Command.EFFECT,
     "snapshot": Command.SNAPSHOT,
     "time": Command.TIME,
-    "time display": Command.TIME_DISPLAY,
     "rate": Command.RATE,
     "offset": Command.OFFSET,
     "query": Command.QUERY,
     "park": Command.PARK,
     "stop effect": Command.STOP_EFFECT,
     "magic sheet": Command.MAGIC_SHEET,
-    "macro eight oh one": Command.MACRO_801,
-    "macro eight hundred one": Command.MACRO_801,
-    "macro eight hundred and one": Command.MACRO_801,
-    "macro eight oh two": Command.MACRO_802,
-    "macro eight hundred two": Command.MACRO_802,
-    "macro eight hundred and two": Command.MACRO_802,
-    "macro eight oh three": Command.MACRO_803,
-    "macro eight hundred three": Command.MACRO_803,
-    "macro eight hundred and three": Command.MACRO_803,
-    "macro eight oh four": Command.MACRO_804,
-    "macro eight hundred four": Command.MACRO_804,
-    "macro eight hundred and four": Command.MACRO_804,
-    "macro eight oh five": Command.MACRO_805,
-    "macro eight hundred five": Command.MACRO_805,
-    "macro eight hundred and five": Command.MACRO_805,
-    "macro eight oh six": Command.MACRO_806,
-    "macro eight hundred six": Command.MACRO_806,
-    "macro eight hundred and six": Command.MACRO_806,
-    "macro eight oh seven": Command.MACRO_807,
-    "macro eight hundred seven": Command.MACRO_807,
-    "macro eight hundred and seven": Command.MACRO_807,
-    "macro eight oh eight": Command.MACRO_808,
-    "macro eight hundred eight": Command.MACRO_808,
-    "macro eight hundred and eight": Command.MACRO_808,
-    "macro eight oh nine": Command.MACRO_809,
-    "macro eight hundred nine": Command.MACRO_809,
-    "macro eight hundred and nine": Command.MACRO_809,
-    "macro eight ten": Command.MACRO_810,
-    "macro eight hundred ten": Command.MACRO_810,
-    "macro eight hundred and ten": Command.MACRO_810,
-
+    "move to": Command.MOVE_TO,
+    "copy to": Command.COPY_TO,
+    "macro": Command.MACRO,
 
     # Common words that shouldn't do anything
     # These are often used colloquially but don't have a direct command mapping
