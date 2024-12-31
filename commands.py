@@ -57,6 +57,8 @@ class Command(Enum):
     RECORD = {"key" : "r", "modifiers" : []}
     RECORD_ONLY = {"key" : "r", "modifiers" : [Key.ctrl]}
     UNDO = {"key" : "x", "modifiers" : [Key.ctrl]}
+    FOLLOW = {"key" : "d", "modifiers" : [Key.shift]}
+    HANG = {"key" : "dd", "modifiers" : [Key.shift]}
 
     # Navigation and Camera
     NEXT = {"key": "", "modifiers": [Key.page_down]}
@@ -122,8 +124,7 @@ words_to_commands = {
     "live": Command.LIVE,
     "blind": Command.BLIND,
     "staging": Command.STAGING,
-    "zero": Command.ZERO,
-    "one": Command.ONE,
+    "zero": Command.ZERO, "one": Command.ONE,
     "two": Command.TWO,
     "three": Command.THREE,
     "four": Command.FOUR,
@@ -137,6 +138,9 @@ words_to_commands = {
     "minus": Command.MINUS,
     "plus": Command.PLUS,
     "slash": Command.DIVIDE,
+
+    "follow": Command.FOLLOW,
+    "hang": Command.HANG,
 
     "cue": Command.CUE,
     "at": Command.AT,
