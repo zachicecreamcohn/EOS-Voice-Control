@@ -1,25 +1,26 @@
 from vosk import Model, KaldiRecognizer
+import os
+from dotenv import load_dotenv
 import sounddevice as sd
 import json
 from pynput.keyboard import Controller, Key, GlobalHotKeys
 from commands import words_to_commands, number_words
 from utils import number_string_to_number, number_to_words
-from enum import Enum
+from pythonosc import udp_client
 
 MODEL_PATH = "vosk-model-small-en-us-0.15"
 model = Model(MODEL_PATH)
 
 grammar = json.dumps(number_words + list(words_to_commands.keys()))
 recognizer = KaldiRecognizer(model, 16000, grammar)
+
+load_dotenv()
+client = udp_client.SimpleUDPClient(os.getenv("OSC_IP"), int(os.getenv("OSC_PORT")))
+
 is_listening = False
 
+
 keyboard = Controller()
-
-class Method(Enum):
-    OSC = 1
-    KEYBOARD = 2
-
-current_method = Method.KEYBOARD
 
 def setup_hotkey():
     # setup so that clicking shift-option "mutes" and "unmutes" the microphone
@@ -34,17 +35,8 @@ def setup_hotkey():
 
 
 def send(command_dict):
-    if current_method == Method.OSC:
-        # send OSC message
-        pass
-    elif current_method == Method.KEYBOARD:
-        for mod in command_dict["shortcut"]["modifiers"]:
-            keyboard.press(mod)
-        if command_dict["shortcut"]["key"]:
-            keyboard.type(command_dict["shortcut"]["key"])
-        for mod in reversed(command_dict["shortcut"]["modifiers"]):
-            keyboard.release(mod)
-
+    for command in command_dict["commands"]:
+        client.send_message(command, [])
 
 def get_commands_from_phrase(phrase):
     if phrase in words_to_commands:
@@ -101,7 +93,7 @@ def audio_callback(indata, frames, time, status):
 
 def main():
     setup_hotkey()
-    with sd.InputStream(samplerate=16000, channels=1, dtype="int16", callback=audio_callback):
+    with sd.InputStream(samplerate=16000, channels=1, dtype="int16", blocksize=512,callback=audio_callback):
         sd.sleep(-1)
 
 if __name__ == "__main__":
