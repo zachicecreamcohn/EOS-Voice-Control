@@ -4,6 +4,7 @@ Using Vosk and pynput, control EOS with your voice. In practice, this can be use
 
 This project is a work in progress and is not yet ready for production use but may still be helpful. Though the remote apps are great, there are times when I've been the only person in the room, on a ladder, and needed to make changes. This solves that problem (along with some wireless headphones).
 
+[Watch the demo](https://drive.google.com/file/d/11Fjp7LpDc_I5GnJm3mEfFMHJmwgPT4FA/view?usp=sharing)
 
 
 ## Installation
