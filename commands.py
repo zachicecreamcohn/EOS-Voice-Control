@@ -162,7 +162,7 @@ words_to_commands = {
     "escape": Command.ESCAPE,
     "tab": Command.TAB,
     "expand": Command.EXPAND,
-    "flexichannel": Command.FLEXI_CHANNEL,
+    "flexi channel": Command.FLEXI_CHANNEL,
     "displays": Command.DISPLAYS,
     "softkey one": Command.SOFTKEY_1,
     "softkey two": Command.SOFTKEY_2,

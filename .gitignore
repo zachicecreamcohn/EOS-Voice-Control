@@ -2,3 +2,5 @@
 __pycache__
 .python-version
 .env
+js-version/test.ts
+test.py
