@@ -1,6 +1,5 @@
 from enum import Enum
 from utils import number_to_words
-from pynput.keyboard import Key
 
 class Command(Enum):
     """
@@ -30,7 +29,7 @@ class Command(Enum):
     # Console Modes
     LIVE = {"commands":["/eos/key/live"]}
     BLIND = {"commands":["/eos/key/blind"]}
-    STAGING = {"commands":[]} # TODO: determine the command for thi
+    STAGING = {"commands":[]} # TODO: determine the command for this
 
     # Common Commands
     CUE = {"commands":["/eos/key/cue"]}
@@ -51,7 +50,7 @@ class Command(Enum):
     HOME = {"commands":["/eos/key/home"]}
     MARK = {"commands":["/eos/key/mark"]}
     RECALLFROM = {"commands":["/eos/key/recall_from"]}
-    SHIFT = {"commands":["/eos/key/shift"]}
+    SHIFT = {"commands":["/eos/key/shift"]} # TODO: Make sure this works properly since it's something that needs to be "held down" and not typed into the command ine
     SNEAK = {"commands":["/eos/key/sneak"]}
     PATCH = {"commands":["/eos/key/patch"]}
     RECORD = {"commands":["/eos/key/record"]}
@@ -60,6 +59,7 @@ class Command(Enum):
     FOLLOW = {"commands":["/eos/key/follow"]}
     HANG = {"commands":["/eos/key/hang"]}
     SOLO = {"commands":["/eos/key/solo"]}
+
 
 
     # Navigation and Camera
@@ -104,6 +104,8 @@ class Command(Enum):
     MACRO = {"commands":["/eos/key/macro"]}
 
     # TODO: Add more (obscure or less used by me) commands from [these docs](https://community.troikatronix.com/assets/uploads/files/FileUpload/f8/c8d85d-eos-osc-keys.pdf?v=lmfj8m1vhl4)
+    # - [ ] Rem Dim
+    # - [ ] Delay
 
 words_to_commands = {
     "live": Command.LIVE,
@@ -197,7 +199,6 @@ words_to_commands = {
 
 
 }
-
 
 
 number_words = [number_to_words(i) for i in range(1001)]
