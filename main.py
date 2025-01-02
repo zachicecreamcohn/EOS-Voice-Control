@@ -7,6 +7,9 @@ from pynput.keyboard import Controller, Key, GlobalHotKeys
 from commands import words_to_commands, number_words
 from utils import number_string_to_number, number_to_words
 from pythonosc import udp_client
+from pythonosc.dispatcher import Dispatcher
+from pythonosc.osc_server import BlockingOSCUDPServer
+import threading
 
 MODEL_PATH = "vosk-model-small-en-us-0.15"
 model = Model(MODEL_PATH)
@@ -16,11 +19,26 @@ recognizer = KaldiRecognizer(model, 16000, grammar)
 
 load_dotenv()
 client = udp_client.SimpleUDPClient(os.getenv("OSC_IP"), int(os.getenv("OSC_PORT")))
+receiving_client = udp_client.SimpleUDPClient(os.getenv("OSC_IP"), int(os.getenv("OSC_LISTEN_PORT")))
 
 is_listening = False
 
 
 keyboard = Controller()
+
+def osc_handler(address, *args):
+    if address == "/eos/out/cmd":
+        os.system("clear")
+        print(args[0])
+
+def start_osc_server():
+    dispatcher = Dispatcher()
+    dispatcher.map("/*", osc_handler)  # or use a specific address pattern
+    server = BlockingOSCUDPServer(
+        (os.getenv("OSC_IP"), int(os.getenv("OSC_LISTEN_PORT"))),
+        dispatcher
+    )
+    threading.Thread(target=server.serve_forever, daemon=True).start()
 
 def setup_hotkey():
     # setup so that clicking shift-option "mutes" and "unmutes" the microphone
@@ -37,6 +55,7 @@ def setup_hotkey():
 def send(command_dict):
     for command in command_dict["commands"]:
         client.send_message(command, [])
+        # received_response = receiving_client.receive()
 
 def get_commands_from_phrase(phrase):
     if phrase in words_to_commands:
@@ -77,7 +96,6 @@ def execute_command(full_command):
                     keyboard.type(cmd_or_char)
             i = largest_match
         else:
-            print(f"Unrecognized: {tokens[i]}")
             i += 1
 
 def audio_callback(indata, frames, time, status):
@@ -88,12 +106,18 @@ def audio_callback(indata, frames, time, status):
         result = json.loads(recognizer.Result())
         if "text" in result:
             command = result["text"]
-            print(f"Recognized: {command}")
             execute_command(command)
 
 def main():
     setup_hotkey()
-    with sd.InputStream(samplerate=16000, channels=1, dtype="int16", blocksize=512,callback=audio_callback):
+    start_osc_server()
+    with sd.InputStream(
+        samplerate=16000,
+        channels=1,
+        dtype="int16",
+        blocksize=512,
+        callback=audio_callback
+    ):
         sd.sleep(-1)
 
 if __name__ == "__main__":
