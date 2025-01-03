@@ -59,6 +59,7 @@ class Command(Enum):
     FOLLOW = {"commands":["/eos/key/follow"]}
     HANG = {"commands":["/eos/key/hang"]}
     SOLO = {"commands":["/eos/key/solo"]}
+    REM_DIM = {"commands":["/eos/key/rem_dim"]}
 
 
 
@@ -103,6 +104,10 @@ class Command(Enum):
     COPY_TO = {"commands":["/eos/key/copy_to"]}
     MACRO = {"commands":["/eos/key/macro"]}
 
+    FOCUS_PALETTE = {"commands":["/eos/key/focus_palette"]}
+    BEAM_PALETTE = {"commands":["/eos/key/beam_palette"]}
+    COLOR_PALETTE = {"commands":["/eos/key/color_palette"]}
+
     # TODO: Add more (obscure or less used by me) commands from [these docs](https://community.troikatronix.com/assets/uploads/files/FileUpload/f8/c8d85d-eos-osc-keys.pdf?v=lmfj8m1vhl4)
     # - [ ] Rem Dim
     # - [ ] Delay
@@ -124,6 +129,7 @@ words_to_commands = {
     "point": Command.DECIMAL,
     "minus": Command.MINUS,
     "plus": Command.PLUS,
+    "and": Command.PLUS,
     "slash": Command.DIVIDE,
 
     "follow": Command.FOLLOW,
@@ -141,6 +147,7 @@ words_to_commands = {
     "enter": Command.ENTER,
     "go to cue": Command.GOTOCUE,
     "full": Command.FULL,
+    "fool": Command.FULL,
     "clear": Command.CLEAR,
     "shift clear": Command.SHIFT_CLEAR,
     "delete": Command.DELETE,
@@ -189,6 +196,10 @@ words_to_commands = {
     "move to": Command.MOVE_TO,
     "copy to": Command.COPY_TO,
     "macro": Command.MACRO,
+    "focus palette": Command.FOCUS_PALETTE,
+    "beam palette": Command.BEAM_PALETTE,
+    "color palette": Command.COLOR_PALETTE,
+    "rem dim": Command.REM_DIM,
 
     # Common words that shouldn't do anything
     # These are often used colloquially but don't have a direct command mapping

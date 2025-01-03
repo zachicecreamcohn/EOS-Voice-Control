@@ -57,6 +57,9 @@ def number_to_words(n):
 
 
 def number_string_to_number(s):
+    # Replace "oh" with "zero" and unify spacing
+    s = s.lower().replace("oh", "zero").replace(" and ", " ")
+    words = s.split()
 
     number_word_to_number = {
         "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
@@ -67,20 +70,28 @@ def number_string_to_number(s):
         "eighty": 80, "ninety": 90, "hundred": 100, "thousand": 1000
     }
 
-    words = s.lower().replace(" and ", " ").split()
+    # Check if all words are single-digit words (zero..nine)
+    single_digit_words = {"zero","one","two","three","four","five","six","seven","eight","nine"}
+    if all(word in single_digit_words for word in words):
+        # Interpret them strictly as digits and combine
+        out = 0
+        for w in words:
+            out = out * 10 + number_word_to_number[w]
+        return out
+
+    # Otherwise, fall back to a place-value approach
     result = 0
     chunk = 0
-
     for word in words:
-        if word == "hundred":
-            chunk *= 100
-        elif word == "thousand":
+        if word == "thousand":
             chunk *= 1000
             result += chunk
             chunk = 0
+        elif word == "hundred":
+            chunk *= 100
         elif word in number_word_to_number:
             chunk += number_word_to_number[word]
         else:
             raise ValueError(f"Unknown word: {word}")
-    result += chunk
-    return result
+
+    return result + chunk

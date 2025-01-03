@@ -115,7 +115,7 @@ def main():
         samplerate=16000,
         channels=1,
         dtype="int16",
-        blocksize=512,
+        blocksize=200,
         callback=audio_callback
     ):
         sd.sleep(-1)
