@@ -1,0 +1,23 @@
+{
+  "eosvoicecontrol": {
+    "common_appName": {
+      "full": "Eos Voice Control",
+      "initials": "EVC",
+      "author": "Zach Cohn"
+    },
+    "common_error": "Oops! Something went wrong.",
+    "screen_home": {
+        "title": "$t(common_appName.full)",
+        "name_tag": "by $t(common_appName.author)",
+    },
+    "screen_settings": {
+        "title": "Settings",
+        "back_button": "Back",
+    },
+    "error_boundary": {
+      "title": "Oops! Something went wrong.",
+      "description": "We are sorry for the inconvenience. Please try again later.",
+      "cta": "Reload the screen"
+    }
+  }
+}
