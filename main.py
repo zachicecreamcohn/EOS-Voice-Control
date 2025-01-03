@@ -35,7 +35,7 @@ def start_osc_server():
     dispatcher = Dispatcher()
     dispatcher.map("/*", osc_handler)  # or use a specific address pattern
     server = BlockingOSCUDPServer(
-        (os.getenv("OSC_IP"), int(os.getenv("OSC_LISTEN_PORT"))),
+        (os.getenv("OSC_LISTEN_IP"), int(os.getenv("OSC_LISTEN_PORT"))),
         dispatcher
     )
     threading.Thread(target=server.serve_forever, daemon=True).start()
