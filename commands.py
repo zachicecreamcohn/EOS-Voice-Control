@@ -84,6 +84,12 @@ class Command(Enum):
     SOFTKEY_7 = {"commands":["/eos/key/softkey_7"]}
     SOFTKEY_8 = {"commands":["/eos/key/softkey_8"]}
 
+    CHAN_PER_GROUP = {"commands":["/eos/key/chan_per_group"]}
+    ODD = {"commands":["/eos/key/odd"]}
+    EVEN = {"commands":["/eos/key/even"]}
+    RANDOM = {"commands":["/eos/key/random"]}
+    GO_ZERO = {"commands":["/eos/key/gocue0"]}
+
     SUBMASTER = {"commands":["/eos/key/sub"]}
 
     # Miscellaneous
@@ -200,6 +206,11 @@ words_to_commands = {
     "beam palette": Command.BEAM_PALETTE,
     "color palette": Command.COLOR_PALETTE,
     "rem dim": Command.REM_DIM,
+    "channel per group": Command.CHAN_PER_GROUP,
+    "odd": Command.ODD,
+    "even": Command.EVEN,
+    "random": Command.RANDOM,
+
 
     # Common words that shouldn't do anything
     # These are often used colloquially but don't have a direct command mapping
