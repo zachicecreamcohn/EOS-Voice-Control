@@ -1,124 +1,57 @@
-from vosk import Model, KaldiRecognizer
 import os
-from dotenv import load_dotenv
-import sounddevice as sd
-import json
-from pynput.keyboard import Controller, Key, GlobalHotKeys
-from commands import words_to_commands, number_words
+import requests
+import dotenv
 from utils import number_string_to_number, number_to_words
 from pythonosc import udp_client
 from pythonosc.dispatcher import Dispatcher
 from pythonosc.osc_server import BlockingOSCUDPServer
-import threading
+from commands import words_to_commands, number_words, command_string_to_command
 
-MODEL_PATH = "vosk-model-small-en-us-0.15"
-model = Model(MODEL_PATH)
+dotenv.load_dotenv()
 
-grammar = json.dumps(number_words + list(words_to_commands.keys()))
-recognizer = KaldiRecognizer(model, 16000, grammar)
-
-load_dotenv()
 client = udp_client.SimpleUDPClient(os.getenv("OSC_IP"), int(os.getenv("OSC_PORT")))
 receiving_client = udp_client.SimpleUDPClient(os.getenv("OSC_IP"), int(os.getenv("OSC_LISTEN_PORT")))
 
-is_listening = False
+def convert_to_etc_eos_command(input_value, model_id):
+    prompt = [
+        {"role": "system", "content": "Convert to ETC EOS command"},
+        {"role": "user", "content": input_value}
+    ]
 
+    try:
+        response = requests.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}"
+            },
+            json={
+                "model": model_id,
+                "messages": prompt
+            }
+        )
+        return response.json()
+    except Exception as e:
+        print("Error sending message to OpenAI:", e)
+        raise
 
-keyboard = Controller()
-
-def osc_handler(address, *args):
-    if address == "/eos/out/cmd":
-        os.system("clear")
-        print(args[0])
-
-def start_osc_server():
-    dispatcher = Dispatcher()
-    dispatcher.map("/*", osc_handler)  # or use a specific address pattern
-    server = BlockingOSCUDPServer(
-        (os.getenv("OSC_LISTEN_IP"), int(os.getenv("OSC_LISTEN_PORT"))),
-        dispatcher
-    )
-    threading.Thread(target=server.serve_forever, daemon=True).start()
-
-def setup_hotkey():
-    # setup so that clicking shift-option "mutes" and "unmutes" the microphone
-    def toggle_listening():
-        global is_listening
-        is_listening = not is_listening
-        print(f"{'Listening' if is_listening else 'Muted'}")
-
-    GlobalHotKeys({
-        "<shift>+<alt>": lambda: toggle_listening()
-        }).start()
+def execute_commands(commands):
+    """
+    Should take in the output of command_string_to_commands and execute the commands
+    """
+    # split input into list (split by " ")
+    command_list = commands.split(" ")
+    for command in command_list:
+        send(command_string_to_command(command))
 
 
 def send(command_dict):
     for command in command_dict["commands"]:
         client.send_message(command, [])
-        # received_response = receiving_client.receive()
-
-def get_commands_from_phrase(phrase):
-    if phrase in words_to_commands:
-        return [words_to_commands[phrase].value]
-    try:
-        number = number_string_to_number(phrase)
-        result = []
-        for digit in str(number):
-            word_for_digit = number_to_words(int(digit))
-            if word_for_digit in words_to_commands:
-                result.append(words_to_commands[word_for_digit].value)
-            else:
-                result.append(digit)
-        return result
-    except ValueError:
-        return None
-
-def execute_command(full_command):
-    tokens = full_command.split()
-    i = 0
-
-    while i < len(tokens):
-        largest_match = None
-        largest_match_cmds = None
-
-        for j in range(i + 1, len(tokens) + 1):
-            phrase = " ".join(tokens[i:j])
-            cmds = get_commands_from_phrase(phrase)
-            if cmds is not None:
-                largest_match = j
-                largest_match_cmds = cmds
-
-        if largest_match is not None:
-            for cmd_or_char in largest_match_cmds:
-                if isinstance(cmd_or_char, dict):
-                    send(cmd_or_char)
-                else:
-                    keyboard.type(cmd_or_char)
-            i = largest_match
-        else:
-            i += 1
-
-def audio_callback(indata, frames, time, status):
-    if not is_listening:
-        return
-    audio_data = indata.tobytes()
-    if recognizer.AcceptWaveform(audio_data):
-        result = json.loads(recognizer.Result())
-        if "text" in result:
-            command = result["text"]
-            execute_command(command)
-
-def main():
-    setup_hotkey()
-    start_osc_server()
-    with sd.InputStream(
-        samplerate=16000,
-        channels=1,
-        dtype="int16",
-        blocksize=200,
-        callback=audio_callback
-    ):
-        sd.sleep(-1)
 
 if __name__ == "__main__":
-    main()
+    model_id = "ft:gpt-4o-mini-2024-07-18:personal::Ao7vsIaL"
+    while True:
+        input_value = input("Ask EOS...\n")
+        response = convert_to_etc_eos_command(input_value, model_id).get("choices")[0].get("message").get("content")
+        execute_commands(response)

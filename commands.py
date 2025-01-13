@@ -224,3 +224,16 @@ words_to_commands = {
 
 
 number_words = [number_to_words(i) for i in range(1001)]
+
+def command_string_to_command(command_name):
+    try:
+        if '.' in command_name:
+            _, attr = command_name.split('.')
+        else:
+            raise ValueError("Invalid command format. Expected 'Command.<attribute>'.")
+
+        return getattr(Command, attr).value
+    except AttributeError:
+        raise ValueError(f"'{attr}' is not a valid attribute of Command.")
+    except Exception as e:
+        raise ValueError(f"Error processing command: {str(e)}")
