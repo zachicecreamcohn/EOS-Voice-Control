@@ -114,7 +114,7 @@ class Command(Enum):
     BEAM_PALETTE = {"commands":["/eos/key/beam_palette"]}
     COLOR_PALETTE = {"commands":["/eos/key/color_palette"]}
 
-    # TODO: Add more (obscure or less used by me) commands from [these docs](https://community.troikatronix.com/assets/uploads/files/FileUpload/f8/c8d85d-eos-osc-keys.pdf?v=lmfj8m1vhl4)
+    # TODO: Add more commands from [these docs](https://community.troikatronix.com/assets/uploads/files/FileUpload/f8/c8d85d-eos-osc-keys.pdf?v=lmfj8m1vhl4)
     # - [ ] Rem Dim
     # - [ ] Delay
 
