@@ -1,11 +1,8 @@
 import os
 import requests
 import dotenv
-from utils import number_string_to_number, number_to_words
 from pythonosc import udp_client
-from pythonosc.dispatcher import Dispatcher
-from pythonosc.osc_server import BlockingOSCUDPServer
-from commands import words_to_commands, number_words, command_string_to_command
+from commands import command_string_to_command
 
 dotenv.load_dotenv()
 
@@ -31,6 +28,7 @@ def convert_to_etc_eos_command(input_value, model_id):
             }
         )
         return response.json()
+
     except Exception as e:
         print("Error sending message to OpenAI:", e)
         raise
@@ -39,7 +37,6 @@ def execute_commands(commands):
     """
     Should take in the output of command_string_to_commands and execute the commands
     """
-    # split input into list (split by " ")
     command_list = commands.split(" ")
     for command in command_list:
         send(command_string_to_command(command))
