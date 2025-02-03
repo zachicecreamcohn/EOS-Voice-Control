@@ -9,9 +9,14 @@ dotenv.load_dotenv()
 client = udp_client.SimpleUDPClient(os.getenv("OSC_IP"), int(os.getenv("OSC_PORT")))
 receiving_client = udp_client.SimpleUDPClient(os.getenv("OSC_IP"), int(os.getenv("OSC_LISTEN_PORT")))
 
+
+def get_system_prompt():
+    with open("system_prompt.txt", "r") as file:
+        return file.read()
+
 def convert_to_etc_eos_command(input_value, model_id):
     prompt = [
-        {"role": "system", "content": "Convert to ETC EOS command"},
+        {"role": "system", "content": get_system_prompt()},
         {"role": "user", "content": input_value}
     ]
 
@@ -51,4 +56,5 @@ if __name__ == "__main__":
     while True:
         input_value = input("Ask EOS...\n")
         response = convert_to_etc_eos_command(input_value, model_id).get("choices")[0].get("message").get("content")
-        execute_commands(response)
+        print(response)
+        # execute_commands(response)
